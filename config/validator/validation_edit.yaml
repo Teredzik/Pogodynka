@@ -1,0 +1,52 @@
+App\Entity\Measurement:
+    properties:
+        location:
+            - NotNull: { message: 'Wybierz lokalizację.', groups: [Edit] }
+
+        date:
+            - NotBlank: { message: 'Podaj datę.', groups: [Edit] }
+
+        celsius:
+            - Regex:
+                  pattern: '/^-?(?:[0-5]?\d|60)$/'
+                  message: 'Temperatura musi być liczbą całkowitą od -60 do 60.'
+                  groups: [Edit]
+
+        humidity:
+            - Regex:
+                  pattern: '/^(?:\d{1,2}(?:[.,]\d+)?|100(?:[.,]0+)?)$/'
+                  message: 'Wilgotność musi być od 0 do 100 (opcjonalnie z częścią dziesiętną).'
+                  groups: [Edit]
+
+        Wind:
+            - Regex:
+                  pattern: '/^(?:\d{1,2}|[12]\d{2}|300)(?:[.,]\d+)?$/'
+                  message: 'Prędkość wiatru musi być od 0 do 300 (opcjonalnie z częścią dziesiętną).'
+                  groups: [Edit]
+
+App\Entity\Location:
+    properties:
+        city:
+            - Regex:
+                  pattern: '/^[\p{L}\s\.\-]{2,64}$/u'
+                  message: 'Miasto ma niepoprawny format.'
+                  groups: [Edit]
+            - Length: { min: 2, max: 64, groups: [Edit] }
+
+        country:
+            - Regex:
+                  pattern: '/^[A-Z]{2}$/'
+                  message: 'Kraj powinien być dwuliterowym kodem ISO (np. PL).'
+                  groups: [Edit]
+
+        latitude:
+            - Regex:
+                  pattern: '/^[-+]?([1-8]?\d(?:[.,]\d+)?|90(?:[.,]0+)?)$/'
+                  message: 'Szerokość geograficzna musi być w zakresie -90..90.'
+                  groups: [Edit]
+
+        longitude:
+            - Regex:
+                  pattern: '/^[-+]?((?:1[0-7]\d|[1-9]?\d)(?:[.,]\d+)?|180(?:[.,]0+)?)$/'
+                  message: 'Długość geograficzna musi być w zakresie -180..180.'
+                  groups: [Edit]

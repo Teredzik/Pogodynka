@@ -42,21 +42,23 @@ class MeasurementRepository extends ServiceEntityRepository
     //        ;
     //    }
     public function findByLocation(string $city, ?string $country = null)
-    {
-        $qb = $this->createQueryBuilder('m')
-            ->join('m.location', 'l')
-            ->where('l.city = :city')
-            ->andWhere('m.date > :now')
-            ->setParameter('city', $city)
-            ->setParameter('now', date('Y-m-d'));
-
-        if ($country) {
-            $qb->andWhere('l.country = :country')
-                ->setParameter('country', $country);
-        }
-
-        $query = $qb->getQuery();
-        return $query->getResult();
+{
+    $qb = $this->createQueryBuilder('m')
+        ->join('m.location', 'l')
+        ->where('l.city = :city')
+        //->andWhere('m.date >= :now')
+        ->setParameter('city', $city);
+        //->setParameter('now', date('Y-m-d'));
+    if ($country) {
+        $qb->andWhere('l.country = :country')
+            ->setParameter('country', $country);
     }
+
+    // (opcjonalnie) posortuj, żeby mieć czytelną kolejność
+    $qb->orderBy('m.date', 'ASC');
+
+    return $qb->getQuery()->getResult();
+}
+
 
 }

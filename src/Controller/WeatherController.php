@@ -1,9 +1,6 @@
 <?php
 
 namespace App\Controller;
-
-use App\Entity\Location;
-use App\Repository\LocationRepository;
 use App\Repository\MeasurementRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,7 +20,6 @@ final class WeatherController extends AbstractController
             throw $this->createNotFoundException("Nie znaleziono danych dla: {$city}");
         }
 
-        // weź lokalizację z pierwszego pomiaru
         $location = $measurements[0]->getLocation();
 
         return $this->render('weather/city.html.twig', [

@@ -1,0 +1,58 @@
+App\Entity\Measurement:
+    properties:
+        location:
+            - NotNull: { message: 'Wybierz lokalizację.', groups: [Create] }
+
+        date:
+            - NotBlank: { message: 'Podaj datę.', groups: [Create] }
+        celsius:
+            - NotBlank: { message: 'Podaj temperaturę.', groups: [Create] }
+            - Regex:
+                  pattern: '/^-?(?:[0-5]?\d|60)$/'
+                  message: 'Temperatura musi być liczbą całkowitą od -60 do 60.'
+                  groups: [Create]
+
+        humidity:
+            - NotBlank: { message: 'Podaj wilgotność.', groups: [Create] }
+            - Regex:
+                  pattern: '/^(?:\d{1,2}(?:[.,]\d+)?|100(?:[.,]0+)?)$/'
+                  message: 'Wilgotność musi być od 0 do 100 (opcjonalnie z częścią dziesiętną).'
+                  groups: [Create]
+
+        Wind:
+            - NotBlank: { message: 'Podaj prędkość wiatru.', groups: [Create] }
+            - Regex:
+                  pattern: '/^(?:\d{1,2}|[12]\d{2}|300)(?:[.,]\d+)?$/'
+                  message: 'Prędkość wiatru musi być od 0 do 300 (opcjonalnie z częścią dziesiętną).'
+                  groups: [Create]
+
+App\Entity\Location:
+    properties:
+        city:
+            - NotBlank: { message: 'Podaj miasto.', groups: [Create] }
+            - Regex:
+                  pattern: '/^[\p{L}\s\.\-]{2,64}$/u'
+                  message: 'Miasto ma niepoprawny format.'
+                  groups: [Create]
+            - Length: { min: 2, max: 64, groups: [Create] }
+
+        country:
+            - NotBlank: { message: 'Podaj kraj.', groups: [Create] }
+            - Regex:
+                  pattern: '/^[A-Z]{2}$/'
+                  message: 'Kraj powinien być dwuliterowym kodem ISO (np. PL).'
+                  groups: [Create]
+
+        latitude:
+            - NotBlank: { message: 'Podaj szerokość geograficzną.', groups: [Create] }
+            - Regex:
+                  pattern: '/^[-+]?([1-8]?\d(?:[.,]\d+)?|90(?:[.,]0+)?)$/'
+                  message: 'Szerokość geograficzna musi być w zakresie -90..90.'
+                  groups: [Create]
+
+        longitude:
+            - NotBlank: { message: 'Podaj długość geograficzną.', groups: [Create] }
+            - Regex:
+                  pattern: '/^[-+]?((?:1[0-7]\d|[1-9]?\d)(?:[.,]\d+)?|180(?:[.,]0+)?)$/'
+                  message: 'Długość geograficzna musi być w zakresie -180..180.'
+                  groups: [Create]
